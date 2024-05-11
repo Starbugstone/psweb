@@ -20,9 +20,7 @@ services:
       bash -c "apt-get update && apt-get install -y \
       default-mysql-client \
       unzip \
-      libzip-dev \
-      nodejs \
-      npm \
+      libzip-dev
       && docker-php-ext-install mysqli pdo_mysql
       && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
       && docker-php-entrypoint php-fpm"
