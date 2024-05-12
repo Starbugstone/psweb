@@ -2,10 +2,36 @@
 
 {% block title %}PZ Server Stats{% endblock %}
 
+{% block javascripts %}
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js" defer></script>
+    <script src="js/countdown.js" defer></script>
+    <script src="js/cookie-pusher.js" defer></script>
+{% endblock %}
+
 {% block body %}
+    <div class="row">
+        <div class="col-md">
+            <p id="cookieCountdown" data-nextdate="{{ nextCookieJarAvailable }}"></p>
+
+            <img src="img/cookie.jpg" class="img-fluid">
+            <form action="{{ path('app_cookie_jar_claim') }}" method="post">
+                <input type="text" name="steam_user" value="{{ steam_user}}" placeholder="Steam Name" class="w-100 mt-2" />
+                <button type="submit" class="btn btn-primary w-100 mt-1">get a cookie</button>
+            </form>
+            <p>last winner : {{ cookieJar.lastCookieWinner }}</p>
+            <p>item won : {{ cookieJar.lastCookieItem }}</p>
+        </div>
+        <div class="col-md">
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block sidebar %}
     <h1>Number of players : {{ playerCount }}</h1>
-    <table>
-        <th>
+    <table class="table table-striped">
+        <th scope="col">
             <td>Player Name</td>
         </th>
         {% for player in players %}
@@ -14,7 +40,4 @@
         </tr>
         {% endfor %}
     </table>
-
-
-
 {% endblock %}

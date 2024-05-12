@@ -4,6 +4,8 @@ namespace App\Service;
 
 use Exception;
 use Psr\Log\LoggerInterface;
+use Pusher\Pusher;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use xPaw\SourceQuery\SourceQuery;
 
 class PzRconService
@@ -72,6 +74,28 @@ class PzRconService
         ];
     }
 
+    public function rewardItem(string $steamUser, string $reward): void
+    {
+        $query = new SourceQuery();
 
+        try
+        {
+            $query->Connect($this->server, $this->port, $this->timeout, $this->engine);
+            $query->SetRconPassword($this->rconPass);
 
+            $query->Rcon("additem $steamUser $reward");
+            $query->Rcon("servermsg  $steamUser has been rewarded with $reward from the cookie jar!");
+        }
+        catch(Exception $e)
+        {
+            $this->logger->error('An error occurred rewarding item', [
+                'error' => $e->getMessage(),
+            ]);
+            throw new Exception('An error occurred rewarding item to ' . $steamUser . ' with ' . $reward . '!');
+        }
+        finally
+        {
+            $query->Disconnect();
+        }
+    }
 }
