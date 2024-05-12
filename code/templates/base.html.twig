@@ -11,27 +11,29 @@
 
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous" defer></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous" defer></script>
+        <script src="js/show-toast.js" defer></script>
         {% block javascripts %}
         {% endblock %}
     </head>
     <body>
-    {# read and display all flash messages #}
-    {% for label, messages in app.flashes %}
+    <div aria-live="polite" aria-atomic="true" class="position-relative">
+        <div class="toast-container position-absolute top-0 end-0 p-3">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+                        <div class="toast-header">
+                            <strong class="me-auto">Notification - {{ label|capitalize }}</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body">
+                            {{ message }}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
 
-        {% set alertValue = 'warning' %}
-        {% if label == 'success' %}
-            {% set alertValue = 'success' %}
-        {% elseif label == 'error' %}
-            {% set alertValue = 'danger' %}
-        {% endif %}
-
-        {% for message in messages %}
-            <div class="alert alert-{{ alertValue}} flash-{{ label }} alert-dismissible fade show" role="alert">
-                {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        {% endfor %}
-    {% endfor %}
     <div class="container text-center rounded-bottom">
         <div class="row header">
             <div class="col-md-12">
