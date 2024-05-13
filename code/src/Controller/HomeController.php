@@ -15,7 +15,6 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(PzRconService $pzRcon, CookieJarService $cookieJarService, Request $request): Response
     {
-        //TODO: get steam_user from cookie
         $steamUser = $request->cookies->get('steam_user', '');
 
         $playerStats = $pzRcon->getPlayerInfo();

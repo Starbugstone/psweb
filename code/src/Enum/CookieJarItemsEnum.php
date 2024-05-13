@@ -8,6 +8,9 @@ enum CookieJarItemsEnum: string
     case POP = 'Base.Pop';
     case BAGUETTE = 'Base.Baguette';
     case CROISSANT = 'Base.Croissant';
+    case COOKIE1 = 'Base.CookiesChocolate';
+    case COOKIE2 = 'Base.CookieChocolateChip';
+    case DOUGHNUT = 'Base.DoughnutPlain';
 
     // Returns all cases of the enum
     public static function listItems(): array

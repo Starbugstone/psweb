@@ -3,9 +3,8 @@ function displayCountdown(newDate, message = null) {
     if (!countdownElement) {
         return;
     }
-    console.log(newDate);
     if(message) {
-        console.log(message);
+        showToast(message, 'warning');
     }
     countdownElement.setAttribute('data-nextdate', newDate);
     handleCountdownElement();
@@ -16,7 +15,7 @@ function removeCountdown() {
     if (!countdownElement) {
         return;
     }
-    countdownElement.innerHTML = "Ready to claim!";
+    countdownElement.innerHTML = "<b>Ready to claim!</b>";
 }
 
 function handleCountdownElement() {

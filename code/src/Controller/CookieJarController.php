@@ -87,7 +87,7 @@ class CookieJarController extends AbstractController
 
         $this->addFlash('success', 'You have claimed a cookie!');
 
-        $this->addPusherMessage('A cookie has been claimed!');
+        $this->addPusherMessage($steamUser);
 
         return $response;
     }

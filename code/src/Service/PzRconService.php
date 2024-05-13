@@ -84,7 +84,7 @@ class PzRconService
             $query->SetRconPassword($this->rconPass);
 
             $query->Rcon("additem $steamUser $reward");
-            $query->Rcon("servermsg  $steamUser has been rewarded with $reward from the cookie jar!");
+            $query->Rcon("servermsg \"$steamUser has been rewarded with $reward from the cookie jar!\"");
         }
         catch(Exception $e)
         {
