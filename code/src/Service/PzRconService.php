@@ -20,7 +20,7 @@ class PzRconService
     public function __construct(LoggerInterface $logger, ParameterBagInterface $params)
     {
         $this->server = 'pz.starbugstone.com';
-        $this->port = 17000;
+        $this->port = 2080;
         $this->timeout = 1;
         $this->engine = SourceQuery::SOURCE;
         $this->rconPass = $params->get('app.rcon_secret');
