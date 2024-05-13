@@ -10,9 +10,6 @@ enum CookieJarItemsEnum: string
     case CROISSANT = 'Base.Croissant';
     case COOKIE1 = 'Base.CookiesChocolate';
     case COOKIE2 = 'Base.CookieChocolateChip';
-    case COOKIE3 = 'Base.CookiesChocolate';
-    case COOKIE4 = 'Base.CookieChocolateChip';
-    case COOKIE5 = 'Base.CookiesChocolate';
     case DOUGHNUT = 'Base.DoughnutPlain';
     case MATCHES = 'Base.Matches';
     case BOILED_EGG = 'Base.EggBoiled';
