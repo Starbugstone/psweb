@@ -10,7 +10,17 @@ enum CookieJarItemsEnum: string
     case CROISSANT = 'Base.Croissant';
     case COOKIE1 = 'Base.CookiesChocolate';
     case COOKIE2 = 'Base.CookieChocolateChip';
+    case COOKIE3 = 'Base.CookiesChocolate';
+    case COOKIE4 = 'Base.CookieChocolateChip';
+    case COOKIE5 = 'Base.CookiesChocolate';
     case DOUGHNUT = 'Base.DoughnutPlain';
+    case MATCHES = 'Base.Matches';
+    case BOILED_EGG = 'Base.EggBoiled';
+    case DOG_FOOD = 'Base.Dogfood';
+    case RADISH = 'farming.RedRadish';
+    case BEER = 'Base.BeerCan';
+    case JUICEBOX = 'Base.JuiceBox';
+    case CHIPS = 'Base.Crisps';
 
     // Returns all cases of the enum
     public static function listItems(): array
