@@ -21,6 +21,13 @@ enum CookieJarItemsEnum: string
     case BEER = 'Base.BeerCan';
     case JUICEBOX = 'Base.JuiceBox';
     case CHIPS = 'Base.Crisps';
+    case PLONKIES = 'Base.Plonkies';
+    case JELLYBEANS = 'Base.JellyBeans';
+    case HOTDOG = 'Base.Hotdog';
+    case STERILLIZED_RAG = 'Base.AlcoholRippedSheets';
+    case BOURBON = 'Base.WhiskeyFull';
+    case COMIC_BOOK = 'Base.ComicBook';
+    case SPECIAL_RUBBER_DUCK = 'Base.Rubberducky2';
 
     // Returns all cases of the enum
     public static function listItems(): array
