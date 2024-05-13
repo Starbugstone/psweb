@@ -17,13 +17,13 @@ class PzRconService
     private string $rconPass;
     private LoggerInterface $logger;
 
-    public function __construct(LoggerInterface $logger)
+    public function __construct(LoggerInterface $logger, ParameterBagInterface $params)
     {
-        $this->server = 'pz.starbugstone.eu';
+        $this->server = 'pz.starbugstone.com';
         $this->port = 17000;
         $this->timeout = 1;
         $this->engine = SourceQuery::SOURCE;
-        $this->rconPass = 'M7%e9p@nX1$u3L-z';
+        $this->rconPass = $params->get('app.rcon_secret');
         $this->logger = $logger;
     }
 
