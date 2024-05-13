@@ -21,7 +21,7 @@ class HomeController extends AbstractController
         $playerCount = $playerStats['playerCount'];
         $players = $playerStats['players'];
 
-        $cookieJar = $cookieJarService->getCookieJar();
+        $cookieJars = $cookieJarService->getCookieJarHistory();
         $isCookieJarAvailable = $cookieJarService->isCookieJarAvailable();
 
         $isoDate = $cookieJarService->nextCookieAvailable()->format('c'); // Converts to ISO 8601 format
@@ -31,7 +31,7 @@ class HomeController extends AbstractController
             'controller_name' => 'HomeController',
             'playerCount' => $playerCount,
             'players' => $players,
-            'cookieJar' => $cookieJar,
+            'cookieJars' => $cookieJars,
             'isCookieJarAvailable' => $isCookieJarAvailable,
             'nextCookieJarAvailable' => $nextCookieJarAvailable,
             'steam_user' => $steamUser,

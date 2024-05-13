@@ -9,21 +9,27 @@ use Doctrine\ORM\EntityManagerInterface;
 class CookieJarService
 {
     private EntityManagerInterface $em;
-    private int $cookieJarTimeout = 10;
+    private int $cookieJarTimeout = 10; //in seconds
 
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }
 
-    public function getCookieJar(): ?CookieJar
+    public function getLastCookieJar(): ?CookieJar
     {
+//        return $this->em->getRepository(CookieJar::class)->findBy([], ['id' => 'DESC'], 5,0);
         return $this->em->getRepository(CookieJar::class)->findOneBy([], ['id' => 'DESC']);
+    }
+
+    public function getCookieJarHistory(int $limit = 5): array
+    {
+        return $this->em->getRepository(CookieJar::class)->findBy([], ['id' => 'DESC'], $limit);
     }
 
     public function isCookieJarAvailable(): bool
     {
-        $cookieJar = $this->getCookieJar();
+        $cookieJar = $this->getLastCookieJar();
         if ($cookieJar === null) {
             return true;
         }
@@ -37,7 +43,7 @@ class CookieJarService
 
     public function nextCookieAvailable()
     {
-        $cookieJar = $this->getCookieJar();
+        $cookieJar = $this->getLastCookieJar();
         if ($cookieJar === null) {
             return new DateTime();
         }

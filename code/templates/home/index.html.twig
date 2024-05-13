@@ -13,13 +13,26 @@
         <div class="col-md">
             <p id="cookieCountdown" data-nextdate="{{ nextCookieJarAvailable }}"></p>
 
-            <img src="img/cookie.jpg" class="img-fluid">
+            <img src="img/cookie.jpg" class="img-fluid panel-image">
             <form action="{{ path('app_cookie_jar_claim') }}" method="post">
-                <input type="text" name="steam_user" value="{{ steam_user}}" placeholder="Steam Name" class="w-100 mt-2" />
+                <input type="text" name="steam_user" value="{{ steam_user}}" placeholder="Steam Name" class="w-100 mt-2" required/>
                 <button type="submit" class="btn btn-primary w-100 mt-1">get a cookie</button>
             </form>
-            <p>last winner : {{ cookieJar.lastCookieWinner }}</p>
-            <p>item won : {{ cookieJar.lastCookieItem }}</p>
+            <table class="table table-striped mt-4">
+                <tr>
+                    <th>last winners</th>
+                    <th>items won</th>
+                </tr>
+
+                {% for cookieJar in cookieJars %}
+                    <tr>
+                        <td>{{ cookieJar.lastCookieWinner }}</td>
+                        <td>{{ cookieJar.lastCookieItem }}</td>
+                    </tr>
+                {%  endfor %}
+
+            </table>
+
         </div>
         <div class="col-md">
 
@@ -31,9 +44,9 @@
 {% block sidebar %}
     <h1>Number of players : {{ playerCount }}</h1>
     <table class="table table-striped">
-        <th scope="col">
-            <td>Player Name</td>
-        </th>
+        <tr>
+            <th>Player Name</th>
+        </tr>
         {% for player in players %}
         <tr>
             <td>{{ player }}</td>
