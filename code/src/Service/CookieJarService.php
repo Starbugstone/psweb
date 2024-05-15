@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class CookieJarService
 {
     private EntityManagerInterface $em;
-    private int $cookieJarTimeout = 10; //in seconds
+    private int $cookieJarTimeout = 600; //in seconds
 
     public function __construct(EntityManagerInterface $em)
     {
