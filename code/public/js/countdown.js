@@ -3,7 +3,7 @@ function displayCountdown(newDate, message = null) {
     if (!countdownElement) {
         return;
     }
-    if(message) {
+    if (message) {
         showToast(message, 'warning');
     }
     countdownElement.setAttribute('data-nextdate', newDate);
@@ -18,6 +18,23 @@ function removeCountdown() {
     countdownElement.innerHTML = "<b>Ready to claim!</b>";
 }
 
+function updateCookieJarTable(cookieJars) {
+    const table = document.getElementById("cookie-jar-winners-body");
+    const rows = table.querySelectorAll('tr');
+    rows.forEach(row => row.remove());
+
+    cookieJars.forEach(cookieJar => {
+        const row = document.createElement('tr');
+        const winnerCell = document.createElement('td');
+        winnerCell.innerText = cookieJar.lastCookieWinner;
+        const itemCell = document.createElement('td');
+        itemCell.innerText = cookieJar.lastCookieItem;
+        row.appendChild(winnerCell);
+        row.appendChild(itemCell);
+        table.appendChild(row);
+    });
+}
+
 function handleCountdownElement() {
     const countdownElement = document.getElementById("cookieCountdown");
     if (!countdownElement) {
@@ -28,19 +45,19 @@ function handleCountdownElement() {
     const countdownDate = new Date(countdownDateRaw).getTime();
 
 // Update the count down every 1 second
-    var x = setInterval(function () {
+    let x = setInterval(function () {
 
         // Get today's date and time
-        var now = new Date().getTime();
+        const now = new Date().getTime();
 
         // Find the distance between now and the count down date
-        var distance = countdownDate - now;
+        const distance = countdownDate - now;
 
         // Time calculations for days, hours, minutes and seconds
         // var days = Math.floor(distance / (1000 * 60 * 60 * 24));
         // var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
         // Display the result in an element with id="countdown"
         // countdownElement.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
@@ -53,4 +70,5 @@ function handleCountdownElement() {
         }
     }, 1000);
 }
+
 handleCountdownElement();

@@ -105,6 +105,13 @@ class CookieJarController extends AbstractController
             $options
         );
 
+        $cookieJars = $this->cookieJarService->getCookieJarHistory();
+        $data['cookieJars'] = array_map(function($cookieJar) {
+            return [
+                'lastCookieWinner' => $cookieJar->getLastCookieWinner(),
+                'lastCookieItem' => $cookieJar->getLastCookieItem()
+            ];
+        }, $cookieJars);
         $data['message'] = "$user has claimed a cookie!";
         $data['nextDate'] = $this->cookieJarService->nextCookieAvailable()->format('c');
         $pusher->trigger('pz-channel', 'cookie-claimed', $data);

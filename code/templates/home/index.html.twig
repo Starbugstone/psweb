@@ -15,22 +15,25 @@
 
             <img src="img/cookie.jpg" class="img-fluid panel-image">
             <form action="{{ path('app_cookie_jar_claim') }}" method="post">
-                <input type="text" name="steam_user" value="{{ steam_user}}" placeholder="Steam Name" class="w-100 mt-2" required/>
+                <input type="text" name="steam_user" value="{{ steam_user }}" placeholder="Steam Name" class="w-100 mt-2" required/>
                 <button type="submit" class="btn btn-primary w-100 mt-1">get a cookie</button>
             </form>
-            <table class="table table-striped mt-4">
+
+            <table class="table table-striped mt-4" id="cookie-jar-winners">
+                <thead>
                 <tr>
                     <th>last winners</th>
                     <th>items won</th>
                 </tr>
-
+                </thead>
+                <tbody id="cookie-jar-winners-body">
                 {% for cookieJar in cookieJars %}
                     <tr>
                         <td>{{ cookieJar.lastCookieWinner }}</td>
                         <td>{{ cookieJar.lastCookieItem }}</td>
                     </tr>
-                {%  endfor %}
-
+                {% endfor %}
+                </tbody>
             </table>
 
         </div>
@@ -43,30 +46,42 @@
 
 {% block sidebar %}
     <h1 id="player-count">Number of players : {{ playerCount }}</h1>
-    <table class="table table-striped" id="player-table">
+    <table class="table table-striped">
+        <thead>
         <tr>
             <th>Player Name</th>
         </tr>
+        </thead>
+        <tbody id="player-table-body">
         {% for player in players %}
-        <tr>
-            <td>{{ player }}</td>
-        </tr>
+            <tr>
+                <td>{{ player }}</td>
+            </tr>
         {% endfor %}
+        </tbody>
     </table>
 
+    {# Generate CSRF token #}
+    {% set csrf_token = csrf_token('fetch_players') %}
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             function updatePlayerData() {
-                fetch('{{ path('api_players') }}')
+                fetch('{{ path('api_players') }}', {
+                    method: 'GET',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token }}'
+                    }
+                })
                     .then(response => response.json())
                     .then(data => {
                         // Update the player count
                         document.getElementById('player-count').innerText = 'Number of players : ' + data.playerCount;
 
                         // Update the player table
-                        const playerTable = document.getElementById('player-table');
+                        const playerTable = document.getElementById('player-table-body');
                         // Clear existing rows
-                        playerTable.querySelectorAll('tr:not(:first-child)').forEach(row => row.remove());
+                        playerTable.querySelectorAll('tr').forEach(row => row.remove());
 
                         // Add new rows
                         data.players.forEach(player => {

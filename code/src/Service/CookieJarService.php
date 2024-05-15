@@ -18,7 +18,6 @@ class CookieJarService
 
     public function getLastCookieJar(): ?CookieJar
     {
-//        return $this->em->getRepository(CookieJar::class)->findBy([], ['id' => 'DESC'], 5,0);
         return $this->em->getRepository(CookieJar::class)->findOneBy([], ['id' => 'DESC']);
     }
 

@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class HomeController extends AbstractController
 {
@@ -22,7 +24,7 @@ class HomeController extends AbstractController
     }
 
     #[Route('/', name: 'app_home')]
-    public function index(Request $request): Response
+    public function index(Request $request, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         $steamUser = $request->cookies->get('steam_user', '');
 
@@ -36,6 +38,9 @@ class HomeController extends AbstractController
         $isoDate = $this->cookieJarService->nextCookieAvailable()->format('c'); // Converts to ISO 8601 format
         $nextCookieJarAvailable = $isoDate;
 
+        // Generate CSRF token
+        $csrfToken = $csrfTokenManager->getToken('fetch_players');
+
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
             'playerCount' => $playerCount,
@@ -44,13 +49,20 @@ class HomeController extends AbstractController
             'isCookieJarAvailable' => $isCookieJarAvailable,
             'nextCookieJarAvailable' => $nextCookieJarAvailable,
             'steam_user' => $steamUser,
+            'csrf_token' => $csrfToken
         ]);
     }
 
 
     #[Route('/api/players', name: 'api_players')]
-    public function getPlayers()
+    public function getPlayers(Request $request, CsrfTokenManagerInterface $csrfTokenManager)
     {
+        $csrfToken = new CsrfToken('fetch_players', $request->headers->get('X-CSRF-TOKEN'));
+
+        if (!$csrfTokenManager->isTokenValid($csrfToken)) {
+            return new JsonResponse(['error' => 'Invalid CSRF token'], Response::HTTP_FORBIDDEN);
+        }
+
         $playerStats = $this->pzRcon->getPlayerInfo();
         // Get player data from your database or service
         $playerCount = $playerStats['playerCount'];
