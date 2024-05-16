@@ -12,7 +12,10 @@
 {% block body %}
     <div class="row">
         <div class="col-md">
-            <p id="cookieCountdown" data-nextdate="{{ nextCookieJarAvailable }}"></p>
+            <p id="cookieCountdown" data-nextdate="{{ nextCookieJarAvailable }}">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                <span class="visually-hidden">Loading...</span>
+            </p>
 
             <img src="img/cookie.jpg" class="img-fluid panel-image">
             <form action="{{ path('app_cookie_jar_claim') }}" method="post">
@@ -103,7 +106,10 @@
 {% endblock %}
 
 {% block footer %}
-    <p id="random-zombie-fact"></p>
+    <p id="random-zombie-fact">
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        <span class="visually-hidden">Loading...</span>
+    </p>
     <p><small>this is generated via AI</small></p>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
