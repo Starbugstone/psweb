@@ -15,7 +15,7 @@ class CohereAiService
     public function getRandomZombieFact(): string
     {
         $body = [
-            'message' => 'Give me a random fun fact about zombies. And start the phrase with "Here\'s a random fun fact about zombies:',
+            'message' => 'Give me a random fun fact about zombies. And start the phrase with "Here\'s a random fun fact about zombies:".',
         ];
         try {
             $response = $this->client->request('POST', self::COHERE_API_URL, [
