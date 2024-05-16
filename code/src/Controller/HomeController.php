@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\CohereAiService;
 use App\Service\CookieJarService;
 use App\Service\PzRconService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,8 +25,9 @@ class HomeController extends AbstractController
     }
 
     #[Route('/', name: 'app_home')]
-    public function index(Request $request, CsrfTokenManagerInterface $csrfTokenManager): Response
+    public function index(Request $request, CsrfTokenManagerInterface $csrfTokenManager, CohereAiService $aiService): Response
     {
+        $aiService->getRandomZombieFact();
         $steamUser = $request->cookies->get('steam_user', '');
 
         $playerStats = $this->pzRcon->getPlayerInfo();
@@ -72,5 +74,17 @@ class HomeController extends AbstractController
             'playerCount' => $playerCount,
             'players' => $players
         ]);
+    }
+
+    #[Route('/api/zombie-facts', name: 'zombie_fact')]
+    public function getZombieFacts(Request $request, CsrfTokenManagerInterface $csrfTokenManager, CohereAiService $aiService)
+    {
+        $csrfToken = new CsrfToken('fetch_players', $request->headers->get('X-CSRF-TOKEN'));
+
+        if (!$csrfTokenManager->isTokenValid($csrfToken)) {
+            return new JsonResponse(['error' => 'Invalid CSRF token'], Response::HTTP_FORBIDDEN);
+        }
+
+        return new JsonResponse(['message' => $aiService->getRandomZombieFact()]) ;
     }
 }

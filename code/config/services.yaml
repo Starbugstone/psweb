@@ -9,6 +9,7 @@ parameters:
     app.pusher_secret: '%env(PUSHER_SECRET)%'
     app.pusher_cluster: '%env(PUSHER_CLUSTER)%'
     app.rcon_secret: '%env(RCON_SECRET)%'
+    app.cohere_api_key : '%env(COHERE_API_KEY)%'
 services:
     # default configuration for services in *this* file
     _defaults:
